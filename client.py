@@ -89,6 +89,11 @@ class MainInterface:
         self.opt_sensor_type['menu'].entryconfigure(self.selection, state = "disabled") 
         self.btn_add_sensor["state"] = "disabled"
 
+        # TODO PEGAR REFERNCIA DE LISTBOX PARA INSERIR A MSG NO MONITOR CERTO
+        # TODO CRIAR UMA FUNCAO PARA REUTILIZAR SEMPRE QUE FOR ENVIAR UMA MENSAGEM
+        lbox_value_list.insert(tk.END, "ABEL")
+        lbox_value_list.insert(tk.END, "GIRAFA DE FOGO")
+
     def get_metric(self):
         if self.selection == "Umidade":
             return "%"
