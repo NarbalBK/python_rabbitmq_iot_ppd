@@ -40,12 +40,14 @@ class MainInterface:
         opt_sensor_type = tk.OptionMenu(frm_add_menu, option_value, *OPTIONS, command=self.get_option)
         opt_sensor_type.config(bg="black")
         opt_sensor_type.pack(side=tk.LEFT, fill=tk.BOTH)
+        self.opt_sensor_type = opt_sensor_type
 
         btn_add_sensor = tkm.Button(frm_add_menu, image=img_add, 
             bg="black", fg="black", command=self.create_monitor,
             highlightthickness = 0, bd = 0)
 
-        btn_add_sensor.pack(side=tk.LEFT)                                           
+        btn_add_sensor.pack(side=tk.LEFT)
+        self.btn_add_sensor = btn_add_sensor                                          
 
         frm_add_menu.pack() # ADD MENU - FRAME END    
 
@@ -60,13 +62,30 @@ class MainInterface:
 
     def get_option(self, value):
         self.selection = value
+        self.btn_add_sensor["state"] = "normal"
 
     def create_monitor(self):
         frm_generic = tk.Frame(self.frm_sensors, bg="black")
         cvs = tk.Canvas(frm_generic, width = 200, height = 200, bg="black", bd=0, highlightthickness=0)  
         cvs.create_image(100, 100, image=self.img_all[self.selection])
         cvs.pack()
-        frm_generic.pack(side=tk.LEFT, fill=tk.BOTH)   
+         
+        lbl_value = tk.Label(frm_generic, text="0.0 {}".format(self.get_metric()), font=('Helvatical bold',20), bg="black", fg="white")
+        lbl_value.pack()
+
+        frm_generic.pack(side=tk.LEFT, fill=tk.BOTH) 
+
+        #DISABLE ITEM OPTION AND BUTTON
+        self.opt_sensor_type['menu'].entryconfigure(self.selection, state = "disabled") 
+        self.btn_add_sensor["state"] = "disabled"
+
+    def get_metric(self):
+        if self.selection == "Umidade":
+            return "%"
+        elif self.selection == "Velocidade":
+            return "m/s"
+        return "ºC"
+
 
 if __name__ == "__main__":
     mainInterface = MainInterface()
