@@ -12,12 +12,12 @@ class MainInterface:
 
         #TITLE
         lbl_title = tk.Label(root, text="Monitor de Sensores", font=('Helvatical bold',40), bg="black", fg="white")
-        lbl_title.pack(pady=40)
+        lbl_title.pack(pady=15)
 
         #MENU LABEL
         lbl_menu = tk.Label(root, text="Escolha um sensor que deseja monitorar", font=('Helvatical bold',18), bg="black", fg="white")
         lbl_menu.pack()
-        lbl_info = tk.Label(root, text="Click (+) para adcionar     Click (-) para remover", font=('Helvatical bold',12), bg="black", fg="white")
+        lbl_info = tk.Label(root, text="Click (+) para adcionar", font=('Helvatical bold',12), bg="black", fg="white")
         lbl_info.pack()
 
         #MENU OPTIONS
@@ -65,15 +65,25 @@ class MainInterface:
         self.btn_add_sensor["state"] = "normal"
 
     def create_monitor(self):
-        frm_generic = tk.Frame(self.frm_sensors, bg="black")
+        frm_generic = tk.Frame(self.frm_sensors, bg="black") # FRAME MONITOR - START
+
         cvs = tk.Canvas(frm_generic, width = 200, height = 200, bg="black", bd=0, highlightthickness=0)  
         cvs.create_image(100, 100, image=self.img_all[self.selection])
         cvs.pack()
          
         lbl_value = tk.Label(frm_generic, text="0.0 {}".format(self.get_metric()), font=('Helvatical bold',20), bg="black", fg="white")
-        lbl_value.pack()
+        lbl_value.pack(pady=8)
 
-        frm_generic.pack(side=tk.LEFT, fill=tk.BOTH) 
+        frm_lbox = tk.Frame(frm_generic) # FRAME LIST BOX - START
+
+        scrollbar = tk.Scrollbar(frm_lbox)
+        lbox_value_list = tk.Listbox(frm_lbox, width=25, height=8, yscrollcommand=scrollbar.set)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        lbox_value_list.pack(side=tk.LEFT, fill=tk.BOTH)
+
+        frm_lbox.pack() # FRAME LIST BOX - END
+
+        frm_generic.pack(side=tk.LEFT, fill=tk.BOTH, pady=5) # FRAME MONITOR - END
 
         #DISABLE ITEM OPTION AND BUTTON
         self.opt_sensor_type['menu'].entryconfigure(self.selection, state = "disabled") 
