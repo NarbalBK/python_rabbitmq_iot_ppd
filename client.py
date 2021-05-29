@@ -1,5 +1,7 @@
 import tkinter as tk
 import tkmacosx as tkm
+import threading
+from mainInfoReceivier import MainInfoReceivier
 
 class MainInterface:
     def __init__(self):
@@ -89,10 +91,13 @@ class MainInterface:
         self.opt_sensor_type['menu'].entryconfigure(self.selection, state = "disabled") 
         self.btn_add_sensor["state"] = "disabled"
 
+
         # TODO PEGAR REFERNCIA DE LISTBOX PARA INSERIR A MSG NO MONITOR CERTO
-        # TODO CRIAR UMA FUNCAO PARA REUTILIZAR SEMPRE QUE FOR ENVIAR UMA MENSAGEM
-        lbox_value_list.insert(tk.END, "ABEL")
-        lbox_value_list.insert(tk.END, "GIRAFA DE FOGO")
+        # print(self.frm_sensors.winfo_children())
+
+        # TODO INCLUIR MENSAGEM DO RABBIT NA TELA
+        # lbox_value_list.insert(tk.END, "ABEL")
+        # lbox_value_list.insert(tk.END, "GIRAFA DE FOGO")
 
     def get_metric(self):
         if self.selection == "Umidade":
@@ -101,9 +106,22 @@ class MainInterface:
             return "m/s"
         return "ºC"
 
+def main():
+    mainInterface = MainInterface()
+    mainInfoReceiverThread = threading.Thread(target=buildMainInfoReceiver, daemon=True)
+    mainInfoReceiverThread.start()
+    mainInterface.start_root()
+
+def buildMainInfoReceiver():
+    mainInfoReceivier = MainInfoReceivier()
 
 if __name__ == "__main__":
-    mainInterface = MainInterface()
-    mainInterface.start_root()
+    main()
+    
+
+
+
+
+     
 
 
