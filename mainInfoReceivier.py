@@ -2,8 +2,7 @@ import pika
 
 class MainInfoReceivier:
     def __init__(self):
-        connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost'))
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 
         channel = connection.channel()
 
