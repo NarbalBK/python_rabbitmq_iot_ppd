@@ -2,20 +2,20 @@ import pika
 import json
 
 class MainInfoReceivier:
-    def __init__(self, mainInterface):
+    def __init__(self, mainInterface, exchange, routing_key):
         self.mainInterface = mainInterface
 
         connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 
         channel = connection.channel()
 
-        channel.exchange_declare(exchange='main_x', exchange_type='direct')
+        channel.exchange_declare(exchange=exchange, exchange_type='direct')
 
         result = channel.queue_declare(queue='', exclusive=True)
         queue_name = result.method.queue    
         
         channel.queue_bind(
-                exchange='main_x', queue=queue_name, routing_key="main_key") 
+                exchange=exchange, queue=queue_name, routing_key=routing_key) 
         
         print(' [*] Waiting for logs. To exit press CTRL+C')
 

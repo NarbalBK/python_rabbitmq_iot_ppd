@@ -13,7 +13,7 @@ class Client:
         mainInterfaceUi.start_root()
 
     def buildMainInfoReceiver(self):
-        mainInfoReceivier = MainInfoReceivier(self.mainInterfaceUi)
+        mainInfoReceivier = MainInfoReceivier(self.mainInterfaceUi, "main_x", "main_key")
 
 def main():
     client = Client()

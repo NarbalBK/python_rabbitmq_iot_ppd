@@ -6,7 +6,7 @@ def main():
     mainInfoSensorThread.start()
 
 def mainInfoSensor():
-    mainInfoSensorObj = MainInfoSensor("Sensor1", "Temperatura")
+    mainInfoSensorObj = MainInfoSensor("Sensor1", "Temperatura", "main_x", "main_key")
 
 if __name__ == "__main__":
     main()
