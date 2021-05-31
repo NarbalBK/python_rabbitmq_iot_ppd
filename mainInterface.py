@@ -1,5 +1,7 @@
 import tkinter as tk
 import tkmacosx as tkm
+from infoReceiver import InfoReceiver
+import threading
 
 class MainInterface:
     def __init__(self):
@@ -66,19 +68,23 @@ class MainInterface:
 
         self.root = root
 
+    def get_receiver(self, receiver):
+        self.mainInfoReceiver = receiver
+
     def start_root(self):
         self.root.mainloop()
 
     def get_option(self, value):
         self.option_value.set(value)
         self.selection = value
-        self.btn_add_sensor["state"] = "normal"
+        # self.btn_add_sensor["state"] = "normal"
 
     def update_option_menu(self):
         menu = self.opt_sensor_name["menu"]
         if self.options[0] == "":
-            self.options.pop(0)
-            menu.delete(0, "end")
+            self.options.pop(0)  
+        menu.delete(0, "end")
+        
         for options in self.options:
             menu.add_command(label=options, 
                              command=lambda value=options: self.get_option(value))
@@ -112,16 +118,15 @@ class MainInterface:
 
         frm_generic.pack(side=tk.LEFT, fill=tk.BOTH, pady=5) # FRAME MONITOR - END
 
-        #DISABLE ITEM OPTION AND BUTTON
-        self.opt_sensor_name['menu'].entryconfigure(self.selection, state = "disabled") 
-        self.btn_add_sensor["state"] = "disabled"
+        infoReceiverThread = threading.Thread(target=self.build_info_receiver, args=("sensor", self.selection, lbl_value, lbox_value_list), daemon=True)
+        infoReceiverThread.start()
 
-        # TODO PEGAR REFERNCIA DE LISTBOX PARA INSERIR A MSG NO MONITOR CERTO
-        # print(self.frm_sensors.winfo_children())
+        # #DISABLE ITEM OPTION AND BUTTON
+        # self.opt_sensor_name['menu'].entryconfigure(self.selection, state = "disabled") 
+        # self.btn_add_sensor["state"] = "disabled"
 
-        # TODO INCLUIR MENSAGEM DO RABBIT NA TELA
-        # lbox_value_list.insert(tk.END, "ABEL")
-        # lbox_value_list.insert(tk.END, "GIRAFA DE FOGO")
+    def build_info_receiver(self, exchange, routing_key, sensor_value, msg_box):
+        receiver = InfoReceiver(exchange, routing_key, sensor_value, msg_box)
 
     def get_metric(self):
         if self.selection == "Umidade":

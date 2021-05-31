@@ -1,6 +1,6 @@
 import threading
 from mainInterface import MainInterface
-from mainInfoReceivier import MainInfoReceivier
+from mainInfoReceiver import MainInfoReceiver
 
 class Client:
     def __init__(self):
@@ -13,7 +13,7 @@ class Client:
         mainInterfaceUi.start_root()
 
     def buildMainInfoReceiver(self):
-        mainInfoReceivier = MainInfoReceivier(self.mainInterfaceUi, "main_x", "main_key")
+        mainInfoReceiver = MainInfoReceiver(self.mainInterfaceUi, "main_x", "main_key")
 
 def main():
     client = Client()
