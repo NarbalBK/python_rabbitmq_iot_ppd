@@ -118,7 +118,7 @@ class MainInterface:
 
         frm_generic.pack(side=tk.LEFT, fill=tk.BOTH, pady=5) # FRAME MONITOR - END
 
-        infoReceiverThread = threading.Thread(target=self.build_info_receiver, args=("sensor", self.selection, lbl_value, lbox_value_list), daemon=True)
+        infoReceiverThread = threading.Thread(target=self.build_info_receiver, args=("main_x", self.selection, lbl_value, lbox_value_list), daemon=True)
         infoReceiverThread.start()
 
         # #DISABLE ITEM OPTION AND BUTTON

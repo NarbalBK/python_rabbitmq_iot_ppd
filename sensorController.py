@@ -2,7 +2,7 @@ import math
 import time
 
 class SensorController:
-    def __init__(self, min, max, min_target, max_target, clock):
+    def __init__(self, infoSensor, min, max, min_target, max_target, clock):
         self.on = True
         self.min = min
         self.max = max
@@ -10,6 +10,7 @@ class SensorController:
         self.min_target = min_target
         self.max_target = max_target
         self.variation = (max-min)
+        self.infoSensor = infoSensor
         self.sinFunction()
         
     def sinFunction(self):
@@ -20,6 +21,8 @@ class SensorController:
                 time.sleep(self.clock)
                 print(x)
                 if x >= self.max_target:
-                    #TODO PEGAR REFERENCIA DA INFO SENSOR
+                    self.infoSensor.sendMsg(x)
+                elif x<= self.min_target:
+                    self.infoSensor.sendMsg(x)
 
 
