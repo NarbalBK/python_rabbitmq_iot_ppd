@@ -1,4 +1,5 @@
 import pika
+import json
 import tkinter as tk
 
 class InfoReceiver:
@@ -19,11 +20,19 @@ class InfoReceiver:
 
         def callback(ch, method, properties, body):
             print(" [x] %r:%r" % (method.routing_key, body))
+            responseString = body.decode("utf-8")
+            responseJson = json.loads(responseString)
+            value = "{:.2f}".format(responseJson["value"])
+            date = responseJson["date"]
+            valueDate = value+" - "+date
+
+            sensor_value.config(text=value)
+            msg_box.insert(tk.END, valueDate)
             
         channel.basic_consume(
             queue=queue_name, on_message_callback=callback, auto_ack=True)
 
-        msg_box.insert(tk.END, "ABEL") #TESTE
+        
             
         channel.start_consuming()
 
