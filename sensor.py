@@ -28,7 +28,9 @@ class Sensor:
         
 
 def main():
-    sensor = Sensor("Sensor1", "Temperatura", 30, 50, 20, 40, 0.2)
+    sensor1 = Sensor("Sensor1", "Temperatura", 30, 50, 20, 40, 0.2)
+    # sensor2 = Sensor("Sensor2", "Umidade", 0, 100, 20, 80, 1)
+    # sensor3 = Sensor("Sensor3", "Velocidade", 0, 36, -1, 20, 0.5)
 
 if __name__ == "__main__":
     main()

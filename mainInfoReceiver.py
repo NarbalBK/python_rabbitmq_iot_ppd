@@ -24,7 +24,7 @@ class MainInfoReceiver:
             name = responseJson["name"]
             tipo = responseJson["type"]
             nametype = name+" - "+tipo
-
+            
             mainInterface.options.append(nametype)
             mainInterface.nametype[nametype] = tipo
             mainInterface.update_option_menu()

@@ -81,6 +81,8 @@ class MainInterface:
 
     def update_option_menu(self):
         menu = self.opt_sensor_name["menu"]
+        deleteClone = set(self.options)
+        self.options = list(deleteClone)
         if self.options[0] == "":
             self.options.pop(0)  
         menu.delete(0, "end")
@@ -100,8 +102,8 @@ class MainInterface:
         lbl_sensor_name = tk.Label(frm_generic, text="{}".format(name[0]), font=('Helvatical bold',20), bg="black", fg="white")
         lbl_sensor_name.pack(pady=8)
 
-        cvs = tk.Canvas(frm_generic, width = 200, height = 200, bg="black", bd=0, highlightthickness=0)  
-        cvs.create_image(100, 100, image=self.img_all[self.nametype[self.selection]])
+        cvs = tk.Canvas(frm_generic, width = 100, height = 100, bg="black", bd=0, highlightthickness=0)  
+        cvs.create_image(50, 50, image=self.img_all[self.nametype[self.selection]])
         cvs.pack()
          
         lbl_value = tk.Label(frm_generic, text="0.0 {}".format(self.get_metric()), font=('Helvatical bold',20), bg="black", fg="white")

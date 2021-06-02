@@ -20,9 +20,10 @@ class InfoReceiver:
 
         def callback(ch, method, properties, body):
             print(" [x] %r:%r" % (method.routing_key, body))
+            tipo = method.routing_key.split(" - ")
             responseString = body.decode("utf-8")
             responseJson = json.loads(responseString)
-            value = "{:.2f}".format(responseJson["value"])
+            value = "{:.2f}".format(responseJson["value"])+self.get_metric(tipo[1])
             date = responseJson["date"]
             valueDate = value+" - "+date
 
@@ -32,9 +33,14 @@ class InfoReceiver:
         channel.basic_consume(
             queue=queue_name, on_message_callback=callback, auto_ack=True)
 
-        
-            
         channel.start_consuming()
+
+    def get_metric(self, tipo):
+        if tipo == "Umidade":
+            return "%"
+        elif tipo == "Velocidade":
+            return "m/s"
+        return "ºC"
 
     
         
